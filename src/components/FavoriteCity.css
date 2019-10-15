@@ -1,0 +1,50 @@
+.FavoriteCity {
+    width: fit-content;
+    color: #738287;
+}
+
+.FC-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.FC-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.FC-temperature {
+    font-size: 40px;
+}
+
+.FC-weather-icon {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.FC-remove-btn {
+    background-color: #6d7e85;
+    color: white;
+}
+
+.FC-data-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 10px;
+    color: white;
+    background-color: #a7afb1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    margin: 5px 10px;
+    border-radius: 4px;
+}
+
+.FC-data-line-key {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+
+
