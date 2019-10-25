@@ -1,32 +1,51 @@
 .FavoriteCity {
-    width: fit-content;
     color: #738287;
+    flex-grow: 1;
+}
+
+.FC-container {
+    background-color: white;
+    margin: 5px;
+    border-radius: 5px;
+    padding: 5px 0;
+    box-shadow: 0 0 5px 0 #202020;
 }
 
 .FC-header {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 10px;
 }
 
 .FC-name {
     font-size: 24px;
     font-weight: bold;
+    padding: 0 5px;
 }
 
 .FC-temperature {
     font-size: 40px;
+    padding: 0 5px;
 }
 
 .FC-weather-icon {
     max-width: 40px;
     max-height: 40px;
+    filter: drop-shadow(2px 4px 6px black);
 }
 
 .FC-remove-btn {
-    background-color: #6d7e85;
+    background-color: #a7afb1;
     color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.FC-data-lines {
+    padding: 0 10px;
 }
 
 .FC-data-line {
@@ -37,13 +56,76 @@
     color: white;
     background-color: #a7afb1;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    margin: 5px 10px;
-    border-radius: 4px;
+    margin: 5px 0;
+    border-radius: 5px;
 }
 
 .FC-data-line-key {
     font-weight: bold;
     margin-right: 20px;
+}
+
+.FC-loader {
+    padding: 10px;
+}
+
+.FC-loader-container {
+    position: relative;
+    height: 10px;
+}
+
+.FC-loader-element {
+    height: 10px;
+    width: 10px;
+    background-color: #738287;
+    border-radius: 50%;
+    position: absolute;
+    animation: FC-loader-keyframes 2s infinite ease-in-out alternate;
+}
+
+@keyframes FC-loader-keyframes {
+    from {
+        left: 0;
+    }
+    to {
+        left: calc(100% - 10px);
+    }
+}
+
+.FC-loader-element:nth-child(2) {
+    animation-delay: .1s;
+}
+
+.FC-loader-element:nth-child(3) {
+    animation-delay: .2s;
+}
+
+.FC-loader-element:nth-child(4) {
+    animation-delay: .3s;
+}
+
+.FC-loader-element:nth-child(5) {
+    animation-delay: .4s;
+}
+
+.FC-loader-element:nth-child(6) {
+    animation-delay: .5s;
+}
+
+.FC-loader-element:nth-child(7) {
+    animation-delay: .6s;
+}
+
+.FC-loader-element:nth-child(8) {
+    animation-delay: .7s;
+}
+
+.FC-loader-element:nth-child(9) {
+    animation-delay: .8s;
+}
+
+.FC-loader-element:nth-child(10) {
+    animation-delay: .9s;
 }
 
 

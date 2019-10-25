@@ -1,48 +1,78 @@
 import React from 'react';
-import {BDiv, Button} from 'bootstrap-4-react';
 import './FavoriteCity.css';
-import icon from '../logo192.png';
+
+import {parseData, weatherApi} from '../ApiHelper'
+
 
 class FavoriteCity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cityName: props.cityName && props.cityName || "Москва"
+            city: props.city,
+            data: null
         };
+    }
 
-        this.data = [
-            {key: "Ветер", value: "Moderate breeze, 6.0 m/s"},
-            {key: "Облачность", value: "Broken clouds"},
-            {key: "Давление", value: "1013 hpa"},
-            {key: "Влажность", value: "52 %"},
-            {key: "Координаты", value: "[59.88, 30.42]"}
-        ];
+    async componentDidMount() {
+        let data = await weatherApi(this.props.city);
+        let res = data.response;
+        let parsedData = parseData(res);
+        this.setState({data: res, parsed: parsedData, city: res.name + ", " + res.sys.country});
     }
 
     render = () => (
-        <BDiv className="FavoriteCity">
-            <BDiv className="FC-header">
-                <BDiv className="FC-name">
-                    {this.state.cityName}
-                </BDiv>
-                <BDiv className="FC-temperature">
-                    <span className="FC-temp-data">8</span>
-                    <span className="FC-temp-units">&deg;C</span>
-                </BDiv>
-                <img className="FC-weather-icon" src={icon} alt=""/>
-                <Button className="FC-remove-btn">X</Button>
-            </BDiv>
-            <BDiv className="FC-data-lines">
+        <div className="FavoriteCity">
+            <div className="FC-container">
+                <div className="FC-header">
+                    <div className="FC-name">
+                        {this.state.city}
+                    </div>
+                    {
+                        this.state.data ? <div className="FC-temperature">
+                            <span className="FC-temp-data">{(this.state.data.main.temp - 273.14).toFixed(1)}</span>
+                            <span className="FC-temp-units">&deg;C</span>
+                        </div> : ""
+                    }
+                    {
+                        this.state.data ? <img className="FC-weather-icon"
+                                               src={"http://openweathermap.org/img/wn/" +
+                                               this.state.data.weather[0].icon +
+                                               ".png"}
+                                               alt=""/> : ""
+                    }
+                    <button className="FC-remove-btn">X</button>
+                </div>
                 {
-                    this.data.map((e) =>
-                        <BDiv key={e.key} className="FC-data-line">
-                            <BDiv className="FC-data-line-key">{e.key}</BDiv>
-                            <BDiv secondary className="FC-data-line-value">{e.value}</BDiv>
-                        </BDiv>
-                    )
+                    this.state.data ? <div className="FC-data-lines">
+                            {
+                                this.state.parsed.map((e) =>
+                                    <div key={e.key} className="FC-data-line">
+                                        <div className="FC-data-line-key">{e.key}</div>
+                                        <div className="FC-data-line-value">{e.value}</div>
+                                    </div>
+                                )
+                            }
+                        </div>
+                        :
+                        <div className={"FC-loader"}>
+                            <div className={"FC-loader-container"}>
+                                <div className={"FC-loader-element"}/>
+                                <div className={"FC-loader-element"}/>
+                                <div className={"FC-loader-element"}/>
+                                <div className={"FC-loader-element"}/>
+                                <div className={"FC-loader-element"}/>
+
+                                <div className={"FC-loader-element"}/>
+                                <div className={"FC-loader-element"}/>
+                                <div className={"FC-loader-element"}/>
+                                <div className={"FC-loader-element"}/>
+                                <div className={"FC-loader-element"}/>
+                            </div>
+                        </div>
                 }
-            </BDiv>
-        </BDiv>
+
+            </div>
+        </div>
     )
 }
 

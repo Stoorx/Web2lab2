@@ -1,0 +1,67 @@
+.CurrentCity {
+    display: flex;
+    flex-direction: row;
+    color: #738287;
+    background-color: white;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 #202020;
+    flex-wrap: wrap;
+    padding: 5px 0;
+}
+
+.CC-left {
+    flex-grow: 1;
+    padding: 0 10px;
+}
+
+.CC-right {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.CC-name {
+    font-size: 48px;
+    font-weight: bold;
+    text-align: start;
+}
+
+.CC-main-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.CC-weather-icon {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.CC-temperature {
+    font-size: 100px;
+}
+
+.CC-data-lines {
+    padding: 0 10px;
+}
+
+.CC-data-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 10px;
+    color: white;
+    background-color: #a7afb1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.CC-data-line-key {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
