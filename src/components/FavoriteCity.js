@@ -3,6 +3,7 @@ import './FavoriteCity.css';
 
 import {parseData, weatherApiByCity} from '../ApiHelper'
 
+import Store from '../Store'
 
 class FavoriteCity extends React.Component {
     constructor(props) {
@@ -40,7 +41,18 @@ class FavoriteCity extends React.Component {
                                                ".png"}
                                                alt=""/> : ""
                     }
-                    <button className="FC-remove-btn">X</button>
+                    <button className="FC-remove-btn"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                Store.dispatch(
+                                    {
+                                        type: "deleteCity",
+                                        data: this.props.city
+                                    }
+                                )
+                            }}>
+                        X
+                    </button>
                 </div>
                 {
                     this.state.data ? <div className="FC-data-lines">
