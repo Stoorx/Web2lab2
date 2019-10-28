@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/Web2lab2/static/css/main.2818e4ec.chunk.css",
+    "main.js": "/Web2lab2/static/js/main.594bad8f.chunk.js",
+    "main.js.map": "/Web2lab2/static/js/main.594bad8f.chunk.js.map",
+    "runtime-main.js": "/Web2lab2/static/js/runtime-main.98ab5bc4.js",
+    "runtime-main.js.map": "/Web2lab2/static/js/runtime-main.98ab5bc4.js.map",
+    "static/js/2.a435c9b0.chunk.js": "/Web2lab2/static/js/2.a435c9b0.chunk.js",
+    "static/js/2.a435c9b0.chunk.js.map": "/Web2lab2/static/js/2.a435c9b0.chunk.js.map",
+    "index.html": "/Web2lab2/index.html",
+    "precache-manifest.7270d8ae2f57a1e716891c60cf4bb1c8.js": "/Web2lab2/precache-manifest.7270d8ae2f57a1e716891c60cf4bb1c8.js",
+    "service-worker.js": "/Web2lab2/service-worker.js",
+    "static/css/main.2818e4ec.chunk.css.map": "/Web2lab2/static/css/main.2818e4ec.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.98ab5bc4.js",
+    "static/js/2.a435c9b0.chunk.js",
+    "static/css/main.2818e4ec.chunk.css",
+    "static/js/main.594bad8f.chunk.js"
+  ]
+}
