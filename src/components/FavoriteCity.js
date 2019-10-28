@@ -1,7 +1,7 @@
 import React from 'react';
 import './FavoriteCity.css';
 
-import {parseData, weatherApi} from '../ApiHelper'
+import {parseData, weatherApiByCity} from '../ApiHelper'
 
 
 class FavoriteCity extends React.Component {
@@ -14,7 +14,7 @@ class FavoriteCity extends React.Component {
     }
 
     async componentDidMount() {
-        let data = await weatherApi(this.props.city);
+        let data = await weatherApiByCity(this.props.city);
         let res = data.response;
         let parsedData = parseData(res);
         this.setState({data: res, parsed: parsedData, city: res.name + ", " + res.sys.country});

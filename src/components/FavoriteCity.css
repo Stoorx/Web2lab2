@@ -7,7 +7,7 @@
     background-color: white;
     margin: 5px;
     border-radius: 5px;
-    padding: 5px 0;
+    padding: 10px 0;
     box-shadow: 0 0 5px 0 #202020;
 }
 
@@ -28,6 +28,7 @@
 .FC-temperature {
     font-size: 40px;
     padding: 0 5px;
+    line-height: 1;
 }
 
 .FC-weather-icon {
@@ -46,6 +47,7 @@
 
 .FC-data-lines {
     padding: 0 10px;
+    margin-top: 5px;
 }
 
 .FC-data-line {
@@ -60,13 +62,21 @@
     border-radius: 5px;
 }
 
+.FC-data-line:first-child {
+    margin-top: 0;
+}
+
+.FC-data-line:last-child {
+    margin-bottom: 0;
+}
+
 .FC-data-line-key {
     font-weight: bold;
     margin-right: 20px;
 }
 
 .FC-loader {
-    padding: 10px;
+    padding: 10px 10px 0;
 }
 
 .FC-loader-container {

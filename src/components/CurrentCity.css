@@ -38,6 +38,7 @@
 .CC-weather-icon {
     max-width: 100px;
     max-height: 100px;
+    filter: drop-shadow(2px 4px 6px black);
 }
 
 .CC-temperature {
@@ -63,5 +64,71 @@
 .CC-data-line-key {
     font-weight: bold;
     margin-right: 20px;
+}
+
+.CC-loader {
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.CC-loader-container {
+    position: relative;
+    height: 10px;
+    width: 50%;
+    margin: auto;
+}
+
+.CC-loader-element {
+    height: 10px;
+    width: 10px;
+    background-color: #738287;
+    border-radius: 50%;
+    position: absolute;
+    animation: CC-loader-keyframes 2s infinite ease-in-out alternate;
+}
+
+@keyframes CC-loader-keyframes {
+    from {
+        left: 0;
+    }
+    to {
+        left: calc(100% - 10px);
+    }
+}
+
+.CC-loader-element:nth-child(2) {
+    animation-delay: .1s;
+}
+
+.CC-loader-element:nth-child(3) {
+    animation-delay: .2s;
+}
+
+.CC-loader-element:nth-child(4) {
+    animation-delay: .3s;
+}
+
+.CC-loader-element:nth-child(5) {
+    animation-delay: .4s;
+}
+
+.CC-loader-element:nth-child(6) {
+    animation-delay: .5s;
+}
+
+.CC-loader-element:nth-child(7) {
+    animation-delay: .6s;
+}
+
+.CC-loader-element:nth-child(8) {
+    animation-delay: .7s;
+}
+
+.CC-loader-element:nth-child(9) {
+    animation-delay: .8s;
+}
+
+.CC-loader-element:nth-child(10) {
+    animation-delay: .9s;
 }
 
