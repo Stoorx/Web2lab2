@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.css';
 
-import FavoriteCity from './components/FavoriteCity'
-import CurrentCity from './components/CurrentCity'
-
 import Store from './Store'
-
 import {weatherApiByCity} from "./ApiHelper";
+
+import CurrentCity from './components/CurrentCity/CurrentCity'
+import FavoriteCitiesPanel from "./components/FavoriteCitiesPanel/FavoriteCitiesPanel";
 
 class App extends React.Component {
     constructor(props) {
@@ -23,7 +22,7 @@ class App extends React.Component {
         });
     }
 
-    updateGeo = (e) => navigator.geolocation.getCurrentPosition(
+    updateGeo = () => navigator.geolocation.getCurrentPosition(
         (position) => {
             this.setState({currentPosition: position})
         },
@@ -94,29 +93,7 @@ class App extends React.Component {
             </div>
             {this.state.error && <div className="A-error-msg">{this.state.error.text}</div>}
             {this.state.currentPosition && <CurrentCity currentPosition={this.state.currentPosition}/>}
-            <div className="A-favorite">
-                <div className="A-favorite-header">
-                    <div className="A-favorite-header-text">Избранное</div>
-                    <form className="A-favorite-header-add" onSubmit={async (e) => {
-                        e.preventDefault();
-                        if (await this.addCityToFavorite(this.inputCity.current.value)) {
-                            this.inputCity.current.value = "";
-                        }
-                    }}>
-                        <input ref={this.inputCity} className="A-favorite-header-add-input" type="text"
-                               placeholder="Добавить новый город"/>
-                        <input type="submit" className="A-favorite-header-add-btn" value="+"/>
-                    </form>
-                </div>
-                <div className="A-favorite-list">
-                    {
-                        this.state.favoriteCities &&
-                        this.state.favoriteCities.map(
-                            (e) => <FavoriteCity key={e} city={e}/>
-                        )
-                    }
-                </div>
-            </div>
+            <FavoriteCitiesPanel/>
         </div>
     );
 }

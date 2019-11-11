@@ -1,0 +1,50 @@
+.FavoriteCity {
+    color: #738287;
+    flex-grow: 1;
+}
+
+.FC-container {
+    background-color: white;
+    margin: 5px;
+    border-radius: 5px;
+    padding: 10px 0;
+    box-shadow: 0 0 5px 0 #202020;
+}
+
+.FC-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.FC-name {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+.FC-temperature {
+    font-size: 40px;
+    padding: 0 5px;
+    line-height: 1;
+}
+
+.FC-weather-icon {
+    max-width: 40px;
+    max-height: 40px;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.FC-remove-btn {
+    background-color: #a7afb1;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+
+
+
