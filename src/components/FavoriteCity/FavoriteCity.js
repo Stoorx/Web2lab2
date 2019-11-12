@@ -7,6 +7,7 @@ import Store from '../../Store'
 import Loader from "../Loader/Loader";
 import DataLines from "../DataLines/DataLines";
 import WeatherIcon from "../WeatherIcon/WeatherIcon";
+import {connect} from "react-redux";
 
 class FavoriteCity extends React.Component {
     constructor(props) {
@@ -28,6 +29,16 @@ class FavoriteCity extends React.Component {
         }
     }
 
+    removeCity = (event) => {
+        event.preventDefault();
+        Store.dispatch(
+            {
+                type: "removeCity",
+                data: this.props.city
+            }
+        )
+    };
+
     render = () => (
         <div className="FavoriteCity">
             <div className="FC-container">
@@ -38,25 +49,14 @@ class FavoriteCity extends React.Component {
                     {
                         this.state.state === "ready" &&
                         [
-                            <div key={"FC-temp"} className="FC-temperature">
+                            <div key="FC-temp" className="FC-temperature">
                                 <span className="FC-temp-data">{(this.state.data.temp - 273.14).toFixed(1)}</span>
                                 <span className="FC-temp-units">&deg;C</span>
                             </div>,
-                            <WeatherIcon src={this.state.data.icon}/>
+                            <WeatherIcon key="FC-icon" src={this.state.data.icon}/>
                         ]
                     }
-                    <button className="FC-remove-btn"
-                            onClick={(event) => {
-                                event.preventDefault();
-                                Store.dispatch(
-                                    {
-                                        type: "deleteCity",
-                                        data: this.props.city
-                                    }
-                                )
-                            }}>
-                        X
-                    </button>
+                    <button className="FC-remove-btn" onClick={this.removeCity}> X</button>
                 </div>
                 {
                     (() => {
@@ -77,4 +77,6 @@ class FavoriteCity extends React.Component {
     )
 }
 
-export default FavoriteCity;
+export default connect((state) => {
+    return state;
+})(FavoriteCity);

@@ -1,36 +1,22 @@
-import example from './example'
-
 const apiKey = "2e31b114bb5ba8f29f05fb811e28d76c";
 
-const weatherApiByCity = (city) => {
-    return {status: "ok", response: repackData(example)};
-};
-// resolveToJson(
-//     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&lang=ru", {
-//         mode: 'cors',
-//         method: 'GET'
-//     })
-// );
+const weatherApiByCity = (city) =>
+    resolveToJson(
+        apiFetch("q=" + city)
+    );
 
-const weatherApiByCoords = (coords) => {
-    return {status: "ok", response: repackData(example)};
-};
-// resolveToJson(
-//     fetch(
-//         "https://api.openweathermap.org/data/2.5/weather?lat=" + coords.latitude
-//         + "&lon=" + coords.longitude + "&appid=" + apiKey + "&lang=ru",
-//         {
-//             mode: 'cors',
-//             method: 'GET'
-//         })
-// );
+const weatherApiByCoords = (coords) =>
+
+    resolveToJson(
+        apiFetch("lat=" + coords.latitude + "&lon=" + coords.longitude)
+    );
 
 const weatherApiById = (id) =>
-    repackData(
-        resolveToJson(
-            apiFetch("id=" + id)
-        )
+
+    resolveToJson(
+        apiFetch("id=" + id)
     );
+
 
 const apiFetch = (searchString) =>
     fetch(
@@ -55,7 +41,7 @@ const resolveToJson = (weatherPromise) =>
                 return json;
             });
             if (response.ok) {
-                return {status: "ok", response: json}
+                return {status: "ok", response: repackData(json)}
             } else {
                 return {status: "fail", response: json}
             }
@@ -81,4 +67,4 @@ const repackData = (obj) => ({
 });
 
 
-export {weatherApiByCity, weatherApiByCoords};
+export {weatherApiByCity, weatherApiByCoords, weatherApiById};

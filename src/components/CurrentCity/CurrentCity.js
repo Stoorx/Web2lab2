@@ -1,31 +1,23 @@
 import React from 'react';
 import './CurrentCity.css';
-import {weatherApiByCoords} from "../../ApiHelper";
 import Loader from "../Loader/Loader";
 import DataLines from "../DataLines/DataLines";
 import WeatherIcon from "../WeatherIcon/WeatherIcon";
+import {connect} from "react-redux";
+import {doGetWeatherData, doUpdateGeolocation} from "../../AppActions";
 
 class CurrentCity extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            state: "default",
-            currentPosition: props.currentPosition
-        };
+        this.state = {};
     }
 
-    async getWeatherInfo() {
-        let data = await weatherApiByCoords(this.state.currentPosition.coords);
-        if (data.status !== "fail") {
-            let res = data.response;
-            this.setState({data: res, parsed: res, city: res.name + ", " + res.country, state: "ready"});
-        } else {
-            this.setState({error: data.response.cod});
-        }
-    }
+    componentDidMount() {
 
-    async componentDidMount() {
-        await this.getWeatherInfo();
+        this.props.dispatch(doUpdateGeolocation());
+
+        let position = this.props.GeolocationReducer.position;
+        this.props.dispatch(doGetWeatherData({coords: position}));
     }
 
     render = () => (
@@ -70,4 +62,6 @@ class CurrentCity extends React.Component {
     )
 }
 
-export default CurrentCity;
+export default connect((state) => {
+    return state;
+})(CurrentCity);

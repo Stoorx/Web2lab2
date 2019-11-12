@@ -1,13 +1,22 @@
-import {createStore} from 'redux'
-import {CityReducer} from './CityReducer'
+import {applyMiddleware, compose, createStore} from 'redux'
+import rootReducer from './Reducers'
+import {persistReducer, persistStore} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import thunk from "redux-thunk";
 
-const _loadState = () => JSON.parse(localStorage.state || "[]");
-const _storeState = (state) => localStorage.state = JSON.stringify(state);
+export default function configureStore(initialState) {
+    let store = createStore(
+        persistReducer({
+                key: 'root',
+                storage
+            }, rootReducer
+        ),
+        initialState,
+        compose(
+            applyMiddleware(thunk)
+        )
+    );
+    let persistor = persistStore(store);
+    return {store, persistor};
+};
 
-let persistentState = _loadState();
-const Store = createStore(CityReducer, persistentState);
-Store.subscribe(() => {
-    _storeState(Store.getState());
-});
-
-export default Store;
