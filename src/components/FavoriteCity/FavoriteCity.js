@@ -3,21 +3,17 @@ import './FavoriteCity.css';
 
 import {weatherApiByCity} from '../../ApiHelper'
 
-import Store from '../../Store'
 import Loader from "../Loader/Loader";
 import DataLines from "../DataLines/DataLines";
 import WeatherIcon from "../WeatherIcon/WeatherIcon";
 import {connect} from "react-redux";
+import {doDeleteFavoriteCity} from "../../AppActions";
 
 class FavoriteCity extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            state: "default",
-            city: props.city,
-            data: null
-        };
-    }
+    removeCity = (e) => {
+        e.preventDefault();
+        this.props.deleteFavCity(this.state.key);
+    };
 
     async componentDidMount() {
         let data = await weatherApiByCity(this.props.city);
@@ -28,17 +24,6 @@ class FavoriteCity extends React.Component {
             this.setState({error: data.response.cod, state: "error"});
         }
     }
-
-    removeCity = (event) => {
-        event.preventDefault();
-        Store.dispatch(
-            {
-                type: "removeCity",
-                data: this.props.city
-            }
-        )
-    };
-
     render = () => (
         <div className="FavoriteCity">
             <div className="FC-container">
@@ -56,7 +41,7 @@ class FavoriteCity extends React.Component {
                             <WeatherIcon key="FC-icon" src={this.state.data.icon}/>
                         ]
                     }
-                    <button className="FC-remove-btn" onClick={this.removeCity}> X</button>
+                    <button className="FC-remove-btn" onClick={this.removeCity}>X</button>
                 </div>
                 {
                     (() => {
@@ -66,7 +51,7 @@ class FavoriteCity extends React.Component {
                             case "loading":
                                 return <Loader/>;
                             case "error":
-                                return <div>Ошибка!</div>;
+                                return <div>{"Ошибка " + this.state.error}</div>;
                             default:
                                 return "";
                         }
@@ -75,8 +60,21 @@ class FavoriteCity extends React.Component {
             </div>
         </div>
     )
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            state: "loading",
+            city: props.city,
+            key: props.city
+        };
+    }
 }
 
-export default connect((state) => {
-    return state;
-})(FavoriteCity);
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+    deleteFavCity: (city) => dispatch(doDeleteFavoriteCity(city))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoriteCity);

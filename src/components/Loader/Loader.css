@@ -1,5 +1,7 @@
 .Loader {
-    padding: 10px 10px 0;
+    padding: 5px 10px;
+    width: 90%;
+    margin: auto;
 }
 
 .L-container {

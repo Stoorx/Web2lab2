@@ -3,6 +3,8 @@ import './FavoriteCitiesPanel.css';
 
 import FavoriteCity from "../FavoriteCity/FavoriteCity";
 import {connect} from "react-redux";
+import {doAddFavoriteCity} from "../../AppActions";
+import ErrorTile from "../ErrorTile/ErrorTile";
 
 class FavoriteCitiesPanel extends React.Component {
     constructor(props) {
@@ -13,9 +15,11 @@ class FavoriteCitiesPanel extends React.Component {
 
     addCity = (e) => {
         e.preventDefault();
-        if (this.addCityToFavorite(this.inputCity.current.value)) {
-            this.inputCity.current.value = "";
+        if (!this.props.addFavCity(this.inputCity.current.value)) {
+            this.setState({error: "Город с таким именем уже добавлен в избранное"});
+            setTimeout(() => this.setState({error: undefined}), 3000);
         }
+        this.inputCity.current.value = "";
     };
 
     render = () => (
@@ -28,10 +32,11 @@ class FavoriteCitiesPanel extends React.Component {
                     <input type="submit" className="FCP-header-add-btn" value="+"/>
                 </form>
             </div>
+            {this.state.error && <ErrorTile text={this.state.error}/>}
             <div className="FCP-list">
                 {
-                    this.state.favoriteCities &&
-                    this.state.favoriteCities.map(
+                    this.props.favoriteCities &&
+                    this.props.favoriteCities.map(
                         (e) => <FavoriteCity key={e} city={e}/>
                     )
                 }
@@ -40,6 +45,10 @@ class FavoriteCitiesPanel extends React.Component {
     )
 }
 
-export default connect((state) => {
-    return state;
-})(FavoriteCitiesPanel);
+const mapStateToProps = (state) => ({favoriteCities: state.favoriteCities});
+
+const mapDistpatchToProps = (dispatch) => ({
+    addFavCity: (cityName) => dispatch(doAddFavoriteCity(cityName))
+});
+
+export default connect(mapStateToProps, mapDistpatchToProps)(FavoriteCitiesPanel);

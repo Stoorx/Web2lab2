@@ -4,29 +4,16 @@ import Loader from "../Loader/Loader";
 import DataLines from "../DataLines/DataLines";
 import WeatherIcon from "../WeatherIcon/WeatherIcon";
 import {connect} from "react-redux";
-import {doGetWeatherData, doUpdateGeolocation} from "../../AppActions";
+import {doGetGeolocation, doGetWeatherData} from "../../AppActions";
 
 class CurrentCity extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-    componentDidMount() {
-
-        this.props.dispatch(doUpdateGeolocation());
-
-        let position = this.props.GeolocationReducer.position;
-        this.props.dispatch(doGetWeatherData({coords: position}));
-    }
-
     render = () => (
         <div className="CurrentCity">
             {
                 this.state.data &&
                 <div className="CC-left">
                     <div className="CC-name">
-                        {this.state.city}
+                        {this.state.data.name + ", " + this.state.data.country}
                     </div>
 
                     <div className="CC-main-block">
@@ -46,7 +33,7 @@ class CurrentCity extends React.Component {
                         case "ready":
                             return (
                                 <div className="CC-right">
-                                    <DataLines data={this.state.parsed}/>
+                                    <DataLines data={this.state.data}/>
                                 </div>
                             );
                         case "loading":
@@ -60,8 +47,31 @@ class CurrentCity extends React.Component {
             }
         </div>
     )
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            state: "loading"
+        };
+    }
+
+    componentDidMount() {
+        this.props.getGeolocation();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.geoLocation && this.props.geoLocation !== prevProps.geoLocation) {
+            this.props.getWeatherData({coords: this.props.geoLocation})
+                .then((o) => this.setState({data: o.response, state: "ready"}));
+        }
+    }
+
+
 }
 
-export default connect((state) => {
-    return state;
-})(CurrentCity);
+const mapStateToProps = (state) => ({geoLocation: state.geoLocation});
+const mapDispatchToProps = (dispatch) => ({
+    getGeolocation: () => dispatch(doGetGeolocation()),
+    getWeatherData: (query) => dispatch(doGetWeatherData(query))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentCity);

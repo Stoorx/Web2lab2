@@ -2,10 +2,10 @@ import {Actions} from './AppActions';
 import {combineReducers} from "redux";
 
 
-const CityReducer = (state = [], action) => {
+const favoriteCitiesReducer = (state = [], action) => {
     switch (action.type) {
         case Actions.AddFavoriteCity:
-            return state.concat([action.city]);
+            return [action.data, ...state];
         case Actions.DeleteFavoriteCity:
             return state.filter(el => el !== action.data);
         default:
@@ -13,21 +13,18 @@ const CityReducer = (state = [], action) => {
     }
 };
 
-const GeolocationReducer = (state = null, action) => {
-
+const geoLocationReducer = (state = null, action) => {
     switch (action.type) {
         case Actions.UpdateGeolocation:
-            let a = {position: action.position};
-            console.log(a);
-            return a;
+            return {...state, position: action.position};
         case Actions.SetGeolocationError:
-            return {error: action.error};
+            return {...state, error: action.error};
         default:
             return state;
     }
 };
 
 export default combineReducers({
-    CityReducer,
-    GeolocationReducer
+    favoriteCities: favoriteCitiesReducer,
+    geoLocation: geoLocationReducer
 });

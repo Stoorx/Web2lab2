@@ -6,7 +6,6 @@ const weatherApiByCity = (city) =>
     );
 
 const weatherApiByCoords = (coords) =>
-
     resolveToJson(
         apiFetch("lat=" + coords.latitude + "&lon=" + coords.longitude)
     );

@@ -2,29 +2,27 @@ import React from 'react';
 import './GeoHeader.css';
 import {doUpdateGeolocation} from "../../AppActions";
 import {connect} from "react-redux";
+import ErrorTile from "../ErrorTile/ErrorTile";
 
 class GeoHeader extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            state: "default"
-        };
-
-    }
 
     render = () => (
         <div className="GeoHeader">
             <div className="GH-main">
                 <div className="GH-text">Погода здесь</div>
-                <button className="GH-update-btn" onClick={() => this.props.dispatch(doUpdateGeolocation())}>
+                <button className="GH-update-btn" onClick={() => this.props.updateGeo()}>
                     Обновить геолокацию
                 </button>
             </div>
-            {/*{this.props === "error" && <ErrorTile text={this.state.error.text}/>}*/}
+            {this.props.geoLocation && this.props.geoLocation.error && <ErrorTile text={this.props.geoLocation.error}/>}
         </div>
     );
 }
 
-export default connect((state) => {
-    return state;
-})(GeoHeader);
+const mapStateToProps = (state) => ({
+    geoLocation: state.geoLocation
+});
+const mapDispatchtoProps = (dispatch) => ({
+    updateGeo: () => dispatch(doUpdateGeolocation())
+});
+export default connect(mapStateToProps, mapDispatchtoProps)(GeoHeader);
