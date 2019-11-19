@@ -66,4 +66,4 @@ const repackData = (obj) => ({
 });
 
 
-export {weatherApiByCity, weatherApiByCoords, weatherApiById};
+export {weatherApiByCity, weatherApiByCoords, weatherApiById, repackData};

@@ -1,4 +1,4 @@
-export default {
+export default () => ({
     "coord": {
         "lon": 37.62,
         "lat": 55.75
@@ -40,4 +40,4 @@ export default {
     "id": 524901,
     "name": "Moscow",
     "cod": 200
-}
+})
