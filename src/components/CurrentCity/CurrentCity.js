@@ -46,7 +46,7 @@ class CurrentCity extends React.Component {
                 })()
             }
         </div>
-    )
+    );
 
     constructor(props) {
         super(props);
@@ -59,7 +59,7 @@ class CurrentCity extends React.Component {
         this.props.getGeolocation();
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.geoLocation && this.props.geoLocation !== prevProps.geoLocation) {
             this.props.getWeatherData({coords: this.props.geoLocation})
                 .then((o) => this.setState({data: o.response, state: "ready"}));

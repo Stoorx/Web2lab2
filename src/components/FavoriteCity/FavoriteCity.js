@@ -1,13 +1,11 @@
 import React from 'react';
 import './FavoriteCity.css';
 
-import {weatherApiByCity} from '../../ApiHelper'
-
 import Loader from "../Loader/Loader";
 import DataLines from "../DataLines/DataLines";
 import WeatherIcon from "../WeatherIcon/WeatherIcon";
 import {connect} from "react-redux";
-import {doDeleteFavoriteCity} from "../../AppActions";
+import {doDeleteFavoriteCity, doGetWeatherData} from "../../AppActions";
 
 class FavoriteCity extends React.Component {
     removeCity = (e) => {
@@ -15,15 +13,16 @@ class FavoriteCity extends React.Component {
         this.props.deleteFavCity(this.state.key);
     };
 
-    async componentDidMount() {
-        let data = await weatherApiByCity(this.props.city);
-        if (data.status !== "fail") {
-            let res = data.response;
-            this.setState({data: res, parsed: res, city: res.name + ", " + res.country, state: "ready"});
-        } else {
-            this.setState({error: data.response.cod, state: "error"});
-        }
-    }
+    componentDidMount = async () => {
+        this.props.getWeatherData({city: this.props.city})
+            .then((o) => {
+                if (o.status === 'ok')
+                    this.setState({data: o.response, state: "ready", city: o.response.name});
+                else
+                    this.setState({error: o.response.cod, state: "error"});
+            })
+    };
+
     render = () => (
         <div className="FavoriteCity">
             <div className="FC-container">
@@ -47,7 +46,7 @@ class FavoriteCity extends React.Component {
                     (() => {
                         switch (this.state.state) {
                             case "ready":
-                                return <DataLines data={this.state.parsed}/>;
+                                return <DataLines data={this.state.data}/>;
                             case "loading":
                                 return <Loader/>;
                             case "error":
@@ -59,7 +58,7 @@ class FavoriteCity extends React.Component {
                 }
             </div>
         </div>
-    )
+    );
 
     constructor(props) {
         super(props);
@@ -74,7 +73,8 @@ class FavoriteCity extends React.Component {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-    deleteFavCity: (city) => dispatch(doDeleteFavoriteCity(city))
+    deleteFavCity: (city) => dispatch(doDeleteFavoriteCity(city)),
+    getWeatherData: (query) => dispatch(doGetWeatherData(query))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavoriteCity);

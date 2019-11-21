@@ -11,7 +11,6 @@ const weatherApiByCoords = (coords) =>
     );
 
 const weatherApiById = (id) =>
-
     resolveToJson(
         apiFetch("id=" + id)
     );

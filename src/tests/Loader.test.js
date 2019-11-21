@@ -1,11 +1,12 @@
 import React from 'react';
 import {shallow} from "../../enzyme";
 import {shallowToJson} from "enzyme-to-json";
-import ErrorTile from '../components/ErrorTile/ErrorTile'
+import Loader from "../components/Loader/Loader";
 
-it('ErrorTile renders without crashing', () => {
+
+it('Loader renders without crashing', () => {
     const error = shallow(
-        <ErrorTile text={"12122"}/>
+        <Loader/>
     );
     expect(shallowToJson(error)).toMatchSnapshot();
 });
