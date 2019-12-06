@@ -21,7 +21,7 @@ class FavoriteCity extends React.Component {
             let res = data.response;
             this.setState({data: res, parsed: res, city: res.name + ", " + res.country, state: "ready"});
         } else {
-            this.setState({error: data.response.cod, state: "error"});
+            this.setState({error: data.response.result.cod, state: "error"});
         }
     }
     render = () => (
@@ -59,7 +59,7 @@ class FavoriteCity extends React.Component {
                 }
             </div>
         </div>
-    )
+    );
 
     constructor(props) {
         super(props);

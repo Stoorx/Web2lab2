@@ -3,25 +3,17 @@ import rootReducer from './Reducers'
 import thunk from "redux-thunk";
 
 
-const _loadState = () => JSON.parse(localStorage.state || "[]");
-const _storeState = (state) => localStorage.state = JSON.stringify(state);
-
-let persistentState = _loadState();
-
-let initialState = {
-    geoLocation: null,
-    favoriteCities: persistentState
-};
+// const _loadState = () => fetch("http:/localhost:8080/favorites").then(async (res) => (await res.json()).map((el) => el.name));
 
 export default function configureStore() {
-    let store = createStore(
+    const initialState = {
+        geoLocation: null,
+        favoriteCities: []
+    };
+    return createStore(
         rootReducer,
         initialState,
         applyMiddleware(thunk)
     );
-    store.subscribe(() => {
-        _storeState(store.getState().favoriteCities);
-    });
-    return store;
 };
 

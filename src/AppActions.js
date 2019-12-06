@@ -4,6 +4,7 @@ import {weatherApiByCity, weatherApiByCoords, weatherApiById} from './ApiHelper'
 export class Actions {
     static AddFavoriteCity = Symbol("Add favorite city");
     static DeleteFavoriteCity = Symbol("Delete favorite city");
+    static LoadFavoriteCities = Symbol("Load favorite cities");
     static UpdateGeolocation = Symbol("Update geoLocation");
     static SetGeolocationError = Symbol("Update geoLocation");
 }
@@ -13,6 +14,10 @@ export const actionAddFavoriteCity = (city) =>
 
 export const actionDeleteFavoriteCity = (city) =>
     ({type: Actions.DeleteFavoriteCity, data: city});
+
+export const actionLoadFavoriteCities = (cities) => {
+    return ({type: Actions.LoadFavoriteCities, cities: cities})
+};
 
 export const actionUpdateGeolocation = (position) =>
     ({type: Actions.UpdateGeolocation, position: position});
@@ -25,14 +30,51 @@ export function doAddFavoriteCity(city) {
         if (getState().favoriteCities.indexOf(city) !== -1)
             return false;
 
+        dbAdd(city);
         dispatch(actionAddFavoriteCity(city));
         return true;
     }
 }
 
+function dbDelete(city) {
+    fetch("http://localhost:8080/favorites",
+        {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: city})
+        }
+    )
+}
+
+function dbAdd(city) {
+    fetch("http://localhost:8080/favorites",
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: city})
+        }
+    )
+}
+
+export async function dbFetch() {
+    return await fetch("http://localhost:8080/favorites").then(
+        async (res) => {
+            const json = await res.json();
+            return json.map((el) => el.name);
+        }
+    );
+}
+
+
 export function doDeleteFavoriteCity(city) {
-    return (dispatch, getState) =>
+    return (dispatch, getState) => {
+        dbDelete(city);
         dispatch(actionDeleteFavoriteCity(city));
+    }
 }
 
 export function doGetGeolocation() {

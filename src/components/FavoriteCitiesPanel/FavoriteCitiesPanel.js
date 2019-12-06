@@ -15,7 +15,7 @@ class FavoriteCitiesPanel extends React.Component {
 
     addCity = (e) => {
         e.preventDefault();
-        if (!this.props.addFavCity(this.inputCity.current.value)) {
+        if (!this.props.addFavCity(this.inputCity.current.value.toLowerCase())) {
             this.setState({error: "Город с таким именем уже добавлен в избранное"});
             setTimeout(() => this.setState({error: undefined}), 3000);
         }

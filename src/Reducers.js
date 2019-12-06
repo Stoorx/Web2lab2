@@ -8,6 +8,8 @@ const favoriteCitiesReducer = (state = [], action) => {
             return [action.data, ...state];
         case Actions.DeleteFavoriteCity:
             return state.filter(el => el !== action.data);
+        case Actions.LoadFavoriteCities:
+            return [...action.cities];
         default:
             return state;
     }
